@@ -1,3 +1,24 @@
 <nav>
-  <a href="/">Main</a> | <a href="/about">About</a>
+  <a href="/" class="nav-link">Main</a> | <a href="/about" class="nav-link">About</a>
 </nav>
+
+<script>
+  // Get the current URL path
+  const currentPath = window.location.pathname;
+
+  // Find the link that matches the current path and add a "active" class to it
+  const links = document.querySelectorAll('.nav-link');
+  links.forEach(link => {
+    if (link.getAttribute('href') === currentPath) {
+      link.classList.add('active');
+    }
+  });
+</script>
+
+<style>
+  .active {
+    color: rgba(255, 0, 0, 0.637);
+    font-weight: bold;
+  }
+</style>
+
