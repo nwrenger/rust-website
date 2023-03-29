@@ -28,7 +28,6 @@ fn about() -> Template {
 fn main() {
     rocket::ignite()
         .attach(Template::fairing())
-        .mount("/", routes![about])
-        .mount("/", routes![index])
+        .mount("/", routes![index, about])
         .launch();
 }
