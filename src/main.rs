@@ -17,6 +17,11 @@ struct AboutContext {
 }
 
 #[derive(serde::Serialize)]
+struct LegalsContext {
+    parent: &'static str,
+}
+
+#[derive(serde::Serialize)]
 struct NotFoundContext {
     parent: &'static str,
     url: String,
@@ -32,6 +37,11 @@ fn about() -> Template {
     Template::render("about", &AboutContext { parent: "layout" })
 }
 
+#[get("/legals")]
+fn legals() -> Template {
+    Template::render("legals", &AboutContext { parent: "layout" })
+}
+
 #[catch(404)]
 fn not_found(req: &Request) -> Template {
     Template::render("not_found", &NotFoundContext { 
@@ -44,6 +54,6 @@ fn main() {
     rocket::ignite()
         .attach(Template::fairing())
         .register(catchers![not_found])
-        .mount("/", routes![index, about])
+        .mount("/", routes![index, about, legals])
         .launch();
 }
