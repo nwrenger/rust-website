@@ -8,7 +8,15 @@ use rocket_dyn_templates::{Template, context};
 fn index() -> Template {
     Template::render("index", context! {
         parent: "layout",
-        title: "Main",
+        title: "Home",
+    })
+}
+
+#[get("/projects")]
+fn projects() -> Template {
+    Template::render("projects", context! {
+        parent: "layout",
+        title: "My Projects",
     })
 }
 
@@ -17,6 +25,14 @@ fn about() -> Template {
     Template::render("about", context! {
         parent: "layout",
         title: "About Me",
+    })
+}
+
+#[get("/contact")]
+fn contact() -> Template {
+    Template::render("contact", context! {
+        parent: "layout",
+        title: "Contact",
     })
 }
 
@@ -44,6 +60,6 @@ fn not_found(req: &Request<'_>) -> Template {
 fn rocket() -> _ {
     rocket::build()
         .register("/", catchers![not_found])
-        .mount("/", routes![index, about, legals])
+        .mount("/", routes![index, projects, about, contact, legals])
         .attach(Template::fairing())
 }

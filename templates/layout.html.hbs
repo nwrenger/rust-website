@@ -14,18 +14,30 @@
         margin: 0 auto;
         background-color: rgb(27, 27, 27);
         color: rgb(204, 204, 204);
-      }
-      .nav-link {
+        height: 100%;
+        }
+      .header-link {
         color: rgb(97, 97, 97);
       }
       .link {
-        color: rgb(97, 97, 97);
+        color:dodgerblue;
+      }
+      .header-link:hover {
+        color: rgba(201, 201, 201, 0.753);
+      }
+      .link:hover {
+        color: rgba(201, 201, 201, 0.753);
+      }
+      .content {
+      padding-top: 50px;
       }
     </style>
   </head>
   <body>
     {{> header}}
-    {{~> page}}
+    <div class="content">
+      {{~> page}}
+    </div>
     {{> footer}}
   </body>
 </html>

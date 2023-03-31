@@ -1,5 +1,23 @@
 <nav>
-  <a href="/" class="nav-link">Main</a> | <a href="/about" class="nav-link">About</a>
+  <header>
+  <a href="/" class="header-link">Home</a> | <a href="/projects" class="header-link">Projects</a> | <a href="/about" class="header-link">About</a> | <a href="/contact" class="header-link">Contact</a>
+  </header>
+  <style>
+    nav {
+  background-color: rgb(14, 14, 14);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+    }
+    header {
+      max-width: 800px;
+      justify-content: center;
+      margin: 0 auto;
+    }
+  </style>
 </nav>
 
 <script>
@@ -7,7 +25,7 @@
   const currentPath = window.location.pathname;
 
   // Find the link that matches the current path and add a "active" class to it
-  const links = document.querySelectorAll('.nav-link');
+  const links = document.querySelectorAll('.header-link');
   links.forEach(link => {
     if (link.getAttribute('href') === currentPath) {
       link.classList.add('active');
