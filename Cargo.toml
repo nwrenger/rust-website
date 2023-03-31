@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 rocket = "0.5.0-rc.3"
+rocket-include-static-resources = "0.10.3"
 serde = { version = "1.0", features = ["derive"] }
 
 [dependencies.rocket_dyn_templates]

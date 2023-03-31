@@ -4,12 +4,21 @@ extern crate rocket;
 use rocket::Request;
 use rocket_dyn_templates::{Template, context};
 
+use std::path::{PathBuf, Path};
+use rocket::fs::NamedFile;
+
 #[get("/")]
 fn index() -> Template {
     Template::render("index", context! {
         parent: "layout",
         title: "Home",
     })
+}
+
+#[get("/<path..>")]
+pub async fn static_files(path: PathBuf) -> Option<NamedFile> {
+    let path = Path::new("static").join(path);
+    NamedFile::open(path).await.ok()
 }
 
 #[get("/projects")]
@@ -60,6 +69,6 @@ fn not_found(req: &Request<'_>) -> Template {
 fn rocket() -> _ {
     rocket::build()
         .register("/", catchers![not_found])
-        .mount("/", routes![index, projects, about, contact, legals])
+        .mount("/", routes![index, projects, about, contact, legals, static_files])
         .attach(Template::fairing())
 }
