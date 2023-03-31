@@ -1,59 +1,49 @@
-#![feature(proc_macro_hygiene, decl_macro)]
-
 #[macro_use]
 extern crate rocket;
 
-use rocket_contrib::templates::Template;
 use rocket::Request;
-
-#[derive(serde::Serialize)]
-struct BoardContext {
-    parent: &'static str,
-}
-
-#[derive(serde::Serialize)]
-struct AboutContext {
-    parent: &'static str,
-}
-
-#[derive(serde::Serialize)]
-struct LegalsContext {
-    parent: &'static str,
-}
-
-#[derive(serde::Serialize)]
-struct NotFoundContext {
-    parent: &'static str,
-    url: String,
-}
+use rocket_dyn_templates::{Template, context};
 
 #[get("/")]
 fn index() -> Template {
-    Template::render("index", &BoardContext { parent: "layout" })
+    Template::render("index", context! {
+        parent: "layout",
+        title: "Main",
+    })
 }
 
 #[get("/about")]
 fn about() -> Template {
-    Template::render("about", &AboutContext { parent: "layout" })
+    Template::render("about", context! {
+        parent: "layout",
+        title: "About Me",
+    })
 }
 
 #[get("/legals")]
 fn legals() -> Template {
-    Template::render("legals", &AboutContext { parent: "layout" })
-}
-
-#[catch(404)]
-fn not_found(req: &Request) -> Template {
-    Template::render("not_found", &NotFoundContext { 
+    Template::render("legals", context! {
         parent: "layout",
-        url: req.uri().to_string(),
+        title: "Legals",
     })
 }
 
-fn main() {
-    rocket::ignite()
-        .attach(Template::fairing())
-        .register(catchers![not_found])
+#[catch(404)]
+fn not_found(req: &Request<'_>) -> Template {
+    Template::render(
+        "not_found",
+        context! {
+            parent: "layout",
+            title: "404 - Not Found",
+            url: req.uri().to_string(),
+        },
+    )
+}
+
+#[launch]
+fn rocket() -> _ {
+    rocket::build()
+        .register("/", catchers![not_found])
         .mount("/", routes![index, about, legals])
-        .launch();
+        .attach(Template::fairing())
 }
