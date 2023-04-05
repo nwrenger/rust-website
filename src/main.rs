@@ -74,7 +74,7 @@ async fn projects(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
 #[actix_web::main]
 async fn main() -> io::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
-    log::info!("starting HTTP server at http://localhost:8080");
+    log::info!("starting HTTP server at http://0.0.0.0:80");
 
     // Handlebars uses a repository for the compiled templates. This object must be
     // shared between the application threads, and is therefore passed to the
