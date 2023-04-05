@@ -15,7 +15,7 @@ use log;
 use serde_json::json;
 
 /// favicon handler
-#[get("/favicon")]
+#[get("/favicon.ico")]
 async fn favicon() -> Result<impl Responder> {
     Ok(NamedFile::open("static/favicon.ico")?)
 }
