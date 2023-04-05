@@ -7,7 +7,7 @@ use actix_web::{
     get,
     http::{header::ContentType, StatusCode},
     middleware::{ErrorHandlerResponse, ErrorHandlers},
-    web, App, HttpResponse, HttpServer, Responder, Result,
+    web, App, HttpResponse, HttpServer, Responder, Result, HttpRequest,
 };
 use env_logger;
 use handlebars::Handlebars;
@@ -134,9 +134,10 @@ fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<
     match hb {
         Some(hb) => {
             let data = json!({
+                "title": error,
+                "path": &HttpRequest::path(request),
                 "error": error,
                 "status_code": res.status().as_str(),
-                "title": error
             });
             let body = hb.render("error", &data);
 
