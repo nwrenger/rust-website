@@ -97,6 +97,7 @@ async fn main() -> io::Result<()> {
             .service(projects)
     })
     .bind(("0.0.0.0", 80))?
+    .bind("[::1]:80")?
     .run()
     .await
 }
