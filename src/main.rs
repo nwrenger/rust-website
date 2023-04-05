@@ -1,27 +1,81 @@
 use std::io;
 
+use actix_files::NamedFile;
 use actix_web::{
     body::BoxBody,
     dev::ServiceResponse,
     get,
     http::{header::ContentType, StatusCode},
     middleware::{ErrorHandlerResponse, ErrorHandlers},
-    web, App, HttpResponse, HttpServer, Result,
+    web, App, HttpResponse, HttpServer, Responder, Result,
 };
+use env_logger;
 use handlebars::Handlebars;
+use log;
 use serde_json::json;
+
+/// favicon handler
+#[get("/favicon")]
+async fn favicon() -> Result<impl Responder> {
+    Ok(NamedFile::open("static/favicon.ico")?)
+}
 
 // Macro documentation can be found in the actix_web_codegen crate
 #[get("/")]
 async fn index(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
-    let data = json!({});
+    let data = json!({
+        "title": "Home"
+    });
     let body = hb.render("index", &data).unwrap();
+
+    HttpResponse::Ok().body(body)
+}
+
+#[get("/about")]
+async fn about(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
+    let data = json!({
+        "title": "About"
+    });
+    let body = hb.render("about", &data).unwrap();
+
+    HttpResponse::Ok().body(body)
+}
+
+#[get("/contact")]
+async fn contact(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
+    let data = json!({
+        "title": "Contact"
+    });
+    let body = hb.render("contact", &data).unwrap();
+
+    HttpResponse::Ok().body(body)
+}
+
+#[get("/legals")]
+async fn legals(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
+    let data = json!({
+        "title": "Legals"
+    });
+    let body = hb.render("legals", &data).unwrap();
+
+    HttpResponse::Ok().body(body)
+}
+
+#[get("/projects")]
+async fn projects(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
+    let data = json!({
+        "title": "Projects"
+    });
+    let body = hb.render("projects", &data).unwrap();
 
     HttpResponse::Ok().body(body)
 }
 
 #[actix_web::main]
 async fn main() -> io::Result<()> {
+    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
+    log::info!("starting HTTP server at http://localhost:8080");
+
     // Handlebars uses a repository for the compiled templates. This object must be
     // shared between the application threads, and is therefore passed to the
     // Application Builder as an atomic reference-counted pointer.
@@ -35,7 +89,12 @@ async fn main() -> io::Result<()> {
         App::new()
             .wrap(error_handlers())
             .app_data(handlebars_ref.clone())
+            .service(favicon)
             .service(index)
+            .service(about)
+            .service(contact)
+            .service(legals)
+            .service(projects)
     })
     .bind(("127.0.0.1", 8080))?
     .run()
@@ -75,7 +134,8 @@ fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<
         Some(hb) => {
             let data = json!({
                 "error": error,
-                // "status_code": res.status().as_str()
+                "status_code": res.status().as_str(),
+                "title": error
             });
             let body = hb.render("error", &data);
 
