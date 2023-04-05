@@ -7,7 +7,7 @@ use actix_web::{
     get,
     http::{header::ContentType, StatusCode},
     middleware::{ErrorHandlerResponse, ErrorHandlers},
-    web, App, HttpResponse, HttpServer, Responder, Result, HttpRequest,
+    web, App, HttpRequest, HttpResponse, HttpServer, Responder, Result,
 };
 use env_logger;
 use handlebars::Handlebars;
@@ -34,7 +34,7 @@ async fn index(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
 #[get("/about")]
 async fn about(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
     let data = json!({
-        "title": "About"
+        "title": "About Me"
     });
     let body = hb.render("about", &data).unwrap();
 
@@ -64,7 +64,7 @@ async fn legals(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
 #[get("/projects")]
 async fn projects(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
     let data = json!({
-        "title": "Projects"
+        "title": "My Projects"
     });
     let body = hb.render("projects", &data).unwrap();
 
