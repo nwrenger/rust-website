@@ -4,13 +4,20 @@
   <h1>My Projects</h1>
   Currently, you can see all my Projects on my <a href="https://www.github.com/NWrenger" class="link">Github</a>. Here may be something fun in the Future. Or is here something fun?<br><br>
  <style>
+      #canvas-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       canvas {
-        border: 1px solid #333;
+        border: 3px solid #585858;
       }
   </style>
   <div id="message">Press the Spacebar to start the Game(PC only):<br><br></div>
   <div id="howplay">Controls: Arrow Keys<br><br></div>
-  <canvas id="canvas"></canvas>
+  <div id="canvas-container">
+    <canvas id="canvas"></canvas>
+  </div>
   <script>
        // Get the canvas element
       const canvas = document.getElementById("canvas");
@@ -62,12 +69,13 @@
         // Handle collisions with walls and the snake's body
         if (head.x < 0 || head.x > canvas.width || head.y < 0 || head.y > canvas.height || checkCollision()) {
           // Game over
-          alert("Game over! Your score is " + score);
+          alert("Game over! Your score is " + score)
           document.location.reload();
         }
 
         // Update the score
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "white";
+        ctx.font = "15px Verdana"
         ctx.fillText("Score: " + score, 10, 20);
 
         // Call the game loop again
