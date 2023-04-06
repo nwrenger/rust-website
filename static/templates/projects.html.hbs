@@ -2,7 +2,110 @@
 
 <section id="projects">
   <h1>My Projects</h1>
-  Currently, you can see all my Projects on my <a href="https://www.github.com/NWrenger" class="link">Github</a>. Here may be something fun in the Future.<br><br>
+  Currently, you can see all my Projects on my <a href="https://www.github.com/NWrenger" class="link">Github</a>. Here may be something fun in the Future. Or is here something fun?<br><br>
+ <style>
+      canvas {
+        border: 1px solid #333;
+      }
+  </style>
+  <div id="message">Press the Spacebar to start the Game(PC only):<br><br></div>
+  <div id="howplay">Controls: Arrow Keys<br><br></div>
+  <canvas id="canvas"></canvas>
+  <script>
+       // Get the canvas element
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      document.getElementById("howplay").style.display = "none";
+
+      // Set the width and height of the canvas
+      canvas.width = 400;
+      canvas.height = 400;
+
+      // Set up the game variables
+      let snake = [{x: 10, y: 10}];
+      let direction = "right";
+      let food = {x: Math.floor(Math.random() * (canvas.width / 10)) * 10, y: Math.floor(Math.random() * (canvas.height / 10)) * 10};
+      let score = 0;
+      let gameStarted = false;
+
+      // Set up the game loop
+      function gameLoop() {
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw the snake
+        ctx.fillStyle = "green";
+        for (let i = 0; i < snake.length; i++) {
+          ctx.fillRect(snake[i].x, snake[i].y, 10, 10);
+        }
+
+        // Draw the food
+        ctx.fillStyle = "red";
+        ctx.fillRect(food.x, food.y, 10, 10);
+
+        // Move the snake
+        let head = {x: snake[0].x, y: snake[0].y};
+        if (direction === "right") head.x += 10;
+        else if (direction === "left") head.x -= 10;
+        else if (direction === "up") head.y -= 10;
+        else if (direction === "down") head.y += 10;
+        snake.unshift(head);
+
+        // Check if the snake has collided with the food
+        if (head.x === food.x && head.y === food.y) {
+          food = {x: Math.floor(Math.random() * (canvas.width / 10)) * 10, y: Math.floor(Math.random() * (canvas.height / 10)) * 10};
+          score++;
+        } else {
+          snake.pop();
+        }
+
+        // Handle collisions with walls and the snake's body
+        if (head.x < 0 || head.x > canvas.width || head.y < 0 || head.y > canvas.height || checkCollision()) {
+          // Game over
+          alert("Game over! Your score is " + score);
+          document.location.reload();
+        }
+
+        // Update the score
+        ctx.fillStyle = "black";
+        ctx.fillText("Score: " + score, 10, 20);
+
+        // Call the game loop again
+        if (gameStarted) {
+          setTimeout(gameLoop, 100);
+        }
+      }
+
+      // Handle keyboard events
+      document.addEventListener("keydown", event => {
+        if (event.code === "Space") {
+          if (!gameStarted) {
+            gameStarted = true;
+            document.getElementById("message").style.display = "none";
+            document.getElementById("howplay").style.display = "block";
+            gameLoop();
+          }
+        } else if (event.code === "ArrowRight" && direction !== "left") {
+          direction = "right";
+        } else if (event.code === "ArrowLeft" && direction !== "right") {
+          direction = "left"
+        } else if (event.code === "ArrowUp" && direction !== "down") {
+          direction = "up";
+        } else if (event.code === "ArrowDown" && direction !== "up") {
+          direction = "down";
+        }
+      });
+
+      // Check if the snake has collided with its own body
+      function checkCollision() {
+        for (let i = 1; i < snake.length; i++) {
+          if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
+            return true;
+          }
+        }
+        return false;
+      }
+  </script>
 </section>
 
 {{/inline}}
