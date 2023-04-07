@@ -66,13 +66,30 @@
           snake.pop();
         }
 
-        // Handle collisions with walls and the snake's body
-        if (head.x < 0 || head.x > canvas.width || head.y < 0 || head.y > canvas.height || checkCollision()) {
-          // Game over
-          alert("Game over! Your score is " + score)
-          document.location.reload();
+        // Wrap the snake around the canvas if it hits a wall
+        if (head.x < 0) {
+          head.x = canvas.width - 10;
+        } else if (head.x >= canvas.width) {
+          head.x = 0;
         }
 
+        if (head.y < 0) {
+          head.y = canvas.height - 10;
+        } else if (head.y >= canvas.height) {
+          head.y = 0;
+        }
+
+        // Check for collisions with the snake's body
+        for (let i = 1; i < snake.length; i++) {
+          if (head.x === snake[i].x && head.y === snake[i].y) {
+            // Game over
+            setTimeout(function() {
+              alert("Game over! Your score is " + score);
+              document.location.reload();
+            }, 100);
+            return;
+          }
+        }
         // Update the score
         ctx.fillStyle = "white";
         ctx.font = "15px Verdana"
@@ -83,36 +100,39 @@
           setTimeout(gameLoop, 100);
         }
       }
-
-      // Handle keyboard events
-      document.addEventListener("keydown", event => {
-        if (event.code === "Space") {
-          if (!gameStarted) {
-            gameStarted = true;
-            document.getElementById("message").style.display = "none";
-            document.getElementById("howplay").style.display = "block";
-            gameLoop();
-          }
-        } else if (event.code === "ArrowRight" && direction !== "left") {
-          direction = "right";
-        } else if (event.code === "ArrowLeft" && direction !== "right") {
-          direction = "left"
-        } else if (event.code === "ArrowUp" && direction !== "down") {
-          direction = "up";
-        } else if (event.code === "ArrowDown" && direction !== "up") {
-          direction = "down";
+      // Handle keyboard input
+      document.addEventListener("keydown", function(event) {
+        switch(event.code) {
+          case "Space":
+            if (!gameStarted) {
+              gameStarted = true;
+              document.getElementById("message").style.display = "none";
+              document.getElementById("howplay").style.display = "block";
+              gameLoop();
+            }
+            break;
+          case "ArrowLeft":
+            if (direction !== "right") {
+              direction = "left";
+            }
+            break;
+          case "ArrowUp":
+            if (direction !== "down") {
+              direction = "up";
+            }
+            break;
+          case "ArrowRight":
+            if (direction !== "left") {
+              direction = "right";
+            }
+            break;
+          case "ArrowDown":
+            if (direction !== "up") {
+              direction = "down";
+            }
+            break;
         }
-      });
-
-      // Check if the snake has collided with its own body
-      function checkCollision() {
-        for (let i = 1; i < snake.length; i++) {
-          if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
-            return true;
-          }
-        }
-        return false;
-      }
+        });
   </script>
 </section>
 
