@@ -5,7 +5,7 @@
   Currently, you can see all my Projects on my <a href="https://www.github.com/NWrenger" class="link">Github</a>. Here may be something fun in the Future. Or is here something fun?<br><br>
  <style>
       #canvas-container {
-        display: flex;
+        display: none;
         justify-content: center;
         align-items: center;
       }
@@ -108,6 +108,7 @@
               gameStarted = true;
               document.getElementById("message").style.display = "none";
               document.getElementById("howplay").style.display = "block";
+              document.getElementById("canvas-container").style.display = "flex";
               gameLoop();
             }
             break;
