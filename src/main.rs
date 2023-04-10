@@ -109,7 +109,7 @@ fn error_handlers() -> ErrorHandlers<BoxBody> {
 
 // Error handler for a 404 Page not found error.
 fn not_found<B>(res: ServiceResponse<B>) -> Result<ErrorHandlerResponse<BoxBody>> {
-    let response = get_error_response(&res, "Page not found");
+    let response = get_error_response(&res, "Page not found", "We couldn't find the requested Path: ".to_owned() + &HttpRequest::path(res.request()).to_owned());
     Ok(ErrorHandlerResponse::Response(ServiceResponse::new(
         res.into_parts().0,
         response.map_into_left_body(),
@@ -117,7 +117,7 @@ fn not_found<B>(res: ServiceResponse<B>) -> Result<ErrorHandlerResponse<BoxBody>
 }
 
 // Generic error handler.
-fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<BoxBody> {
+fn get_error_response<B>(res: &ServiceResponse<B>, error: &str, description: String) -> HttpResponse<BoxBody> {
     let request = res.request();
 
     // Provide a fallback to a simple plain text response in case an error occurs during the
@@ -135,7 +135,7 @@ fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<
         Some(hb) => {
             let data = json!({
                 "title": error,
-                "path": &HttpRequest::path(request),
+                "describtion": description,
                 "error": error,
                 "status_code": res.status().as_str(),
             });
