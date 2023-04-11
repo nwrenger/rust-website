@@ -2,23 +2,32 @@
   <header>
     <a href="/" class="header-link">Home</a> | <a href="/projects" class="header-link">Projects</a> | <a href="/about" class="header-link">About</a> | <a href="/contact" class="header-link">Contact</a> | <a href="/legals" class="header-link">Legals</a>
   </header>
+</nav>
+
   <style>
     nav {
-  background-color: #191E29;
-  padding-top: 25px;
-  padding-bottom: 25px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+      background-color: #191E29;
+      padding-top: 25px;
+      {{!-- padding-bottom: 25px; --}}
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
     }
     header {
       max-width: 800px;
       justify-content: center;
       margin: 0 auto;
     }
+    nav::after {
+      content: "";
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: #262626; /* Change this to the desired color */
+      margin-top: 25px;
+    }
   </style>
-</nav>
 
 <script>
   // Get the current URL path
