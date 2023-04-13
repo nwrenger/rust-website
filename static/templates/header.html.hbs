@@ -4,7 +4,7 @@
       <a href="/" class="header-link">Home</a>  <a href="/projects" class="header-link">Projects</a>   <a href="/about" class="header-link">About</a>   <a href="/contact" class="header-link">Contact</a>   <a href="/legals" class="header-link">Legals</a>
     </left>
     <right>
-      <a href="https://github.com/NWrenger/website" target="_blank" rel="noreferrer" class="header-link">Github <img src="https://raw.githubusercontent.com/NWrenger/NWrenger/master/external-link.svg" alt="github" width="12" height="12"/></a>
+      <a href="https://github.com/NWrenger/website" target="_blank" rel="noreferrer" class="mobile-link">Github <img src="https://raw.githubusercontent.com/NWrenger/NWrenger/master/external-link.svg" alt="github" width="12" height="12"/></a>
     </right>
   </nav>
 </header>
@@ -26,6 +26,11 @@
   right {
     float: right;
     padding-right: 10px;
+  }
+  @media only screen and (max-width: 768px) {
+    .mobile-link {
+      display: none;
+    }
   }
   .active {
     color: rgba(201, 201, 201, 0.753);
