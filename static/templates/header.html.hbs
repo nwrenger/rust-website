@@ -1,8 +1,13 @@
-<nav>
-  <header>
-    <a href="/" class="header-link">Home</a>  <a href="/projects" class="header-link">Projects</a>   <a href="/about" class="header-link">About</a>   <a href="/contact" class="header-link">Contact</a>   <a href="/legals" class="header-link">Legals</a>
-  </header>
-</nav>
+<header>
+  <nav>
+    <left>
+      <a href="/" class="header-link">Home</a>  <a href="/projects" class="header-link">Projects</a>   <a href="/about" class="header-link">About</a>   <a href="/contact" class="header-link">Contact</a>   <a href="/legals" class="header-link">Legals</a>
+    </left>
+    <right>
+      <a href="https://www.github.com/NWrenger" target="_blank" rel="noreferrer" class="header-link">Github <img src="https://raw.githubusercontent.com/NWrenger/NWrenger/master/external-link.svg" alt="github" width="12" height="12"/></a>
+    </right>
+  </nav>
+</header>
 
   <style>
   nav {
@@ -13,12 +18,14 @@
     top: 0;
     left: 0;
     width: 100%;
-  }
-  header {
-    padding-left: 10px;
-    justify-content: center;
-    margin: 0 auto;
     font-size: large;
+  }
+  left {
+    padding-left: 10px;
+  }
+  right {
+    float: right;
+    padding-right: 10px;
   }
   .active {
     color: rgba(201, 201, 201, 0.753);
