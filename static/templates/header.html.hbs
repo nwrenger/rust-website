@@ -1,42 +1,118 @@
 <header>
   <nav>
-    <left>
-      <a href="/" class="header-link">Home</a>  <a href="/projects" class="header-link">Projects</a>   <a href="/about" class="header-link">About</a>   <a href="/contact" class="header-link">Contact</a>   <a href="/legals" class="header-link">Legals</a>
-    </left>
-    <right>
-      <a href="https://github.com/NWrenger/website" target="_blank" rel="noreferrer" class="mobile-link">Github <img src="https://raw.githubusercontent.com/NWrenger/NWrenger/master/external-link.svg" alt="github" width="12" height="12"/></a>
-    </right>
+    <ul class="tabs">
+      <li><a href="/" class="header-link">Home</a></li>
+      <li><a href="/projects" class="header-link">Projects</a></li>
+      <li><a href="/about" class="header-link">About</a></li>
+      <li><a href="/contact" class="header-link">Contact</a></li>
+      <li><a href="/legals" class="header-link">Legals</a></li>
+    </ul>
+    <div class="github-link-container">
+      <a href="https://github.com/NWrenger/website" target="_blank" rel="noreferrer" class="github-link">
+        Github <img src="https://raw.githubusercontent.com/NWrenger/NWrenger/master/external-link.svg" alt="github" width="12" height="12"/>
+      </a>
+    </div>
   </nav>
 </header>
 
-  <style>
+<style>
   nav {
     background-color: #212529;
     padding-top: 25px;
-    padding-bottom: 25px;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     font-size: large;
+    border-bottom: 4px solid #15191d;
+    display: flex;
+    justify-content: space-between;
   }
-  left {
-    padding-left: 10px;
+  
+  .mobile-menu {
+    display: none;
   }
-  right {
-    float: right;
-    padding-right: 10px;
+
+  .tabs {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .tabs li {
+    flex: 1;
+    margin: 0 5px;
+    text-align: center;
+  }
+  
+  .tabs li a {
+    display: block;
+    padding: 10px 15px;
+    background-color: #212529;
+    color: #bdbdbd;
+    text-decoration: none;
+    border: 1px solid #15191d;
+    border-radius: 5px 5px 0 0;
+  }
+  
+  .tabs li a.active {
+    background-color: #15191d;
+    color: #fff;
+    border-bottom: none;
+  }
+  
+  .github-link-container {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    margin-right: 15px;
+  }
+  
+  .github-link {
+    display: flex;
+    align-items: center;
+    color: #bdbdbd;
+    text-decoration: none;
+  }
+  
+  .github-link img {
+    margin-left: 5px;
+  }
+  
+  .header-link:hover {
+    background-color: #1a1e22;
+    color: #fff;
+  }
+  
+  .github-link:hover {
+    color: #fff;
   }
   @media only screen and (max-width: 768px) {
+ .tabs {
+      flex-wrap: wrap;
+      padding-top: 0px;
+    }
+    
+    .tabs li {
+      flex-basis: 100%;
+      margin-bottom: 5px;
+    }
+    
+    .tabs li a {
+      border-radius: 5px;
+    }
+    
     .mobile-link {
-      display: none;
+      display: block;
+      margin-top: 10px;
+      text-align: center;
     }
   }
-  .active {
-    color: rgba(201, 201, 201, 0.753);
-    font-weight: bold;
-  }
-  </style>
+  
+</style>
 
 <script>
   // Get the current URL path
