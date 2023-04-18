@@ -1,12 +1,26 @@
 <header>
   <nav>
-    <ul class="tabs">
+    <div class="tabs" id="menu">
+      <li><button class="menu-button" onclick="toggle()">Menu</button></li>
+    </div>
+    <div>
+    <ul class="tabs" id="tabs">
       <li><a href="/" class="header-link">Home</a></li>
       <li><a href="/projects" class="header-link">Projects</a></li>
       <li><a href="/about" class="header-link">About</a></li>
       <li><a href="/contact" class="header-link">Contact</a></li>
       <li><a href="/legals" class="header-link">Legals</a></li>
     </ul>
+    </div>
+    <div>
+    <ul class="menu-tabs" id="menu-tabs">
+      <li><a href="/" class="header-link">Home</a></li>
+      <li><a href="/projects" class="header-link">Projects</a></li>
+      <li><a href="/about" class="header-link">About</a></li>
+      <li><a href="/contact" class="header-link">Contact</a></li>
+      <li><a href="/legals" class="header-link">Legals</a></li>
+    </ul>
+    </div>
     <div class="github-link-container">
       <a href="https://github.com/NWrenger/website" target="_blank" rel="noreferrer" class="github-link">
         Github <img src="https://raw.githubusercontent.com/NWrenger/NWrenger/master/external-link.svg" alt="github" width="12" height="12"/>
@@ -29,8 +43,13 @@
     justify-content: space-between;
   }
   
-  .mobile-menu {
+  #menu {
     display: none;
+  }
+
+  #tabs {
+    display: flex;
+    position: relative;
   }
 
   .tabs {
@@ -64,6 +83,27 @@
     border-bottom: none;
     border: 1px solid #15191d;
   }
+
+  .tabs li button {
+    display: block;
+    padding: 10px 15px;
+    background-color: #212529;
+    color: #bdbdbd;
+    text-decoration: none;
+    border: 1px solid #15191d;
+    border-radius: 5px 5px 5px 5px;
+  }
+
+  .tabs li button.active {
+    background-color: #15191d;
+    color: #fff;
+    border-bottom: none;
+    border: 1px solid #15191d;
+  }
+
+  button {
+    font-size: large;
+  }
   
   .github-link-container {
     display: flex;
@@ -88,28 +128,70 @@
     color: #fff;
   }
   
+  .menu-button:hover {
+    background-color: #1a1e22;
+    color: #fff;
+  }
   .github-link:hover {
     color: #fff;
   }
+
+  #menu-tabs {
+    display: none;
+  }
+
+  #menu-tabs.active {
+    display: none;
+  }
+
+
+
   @media only screen and (max-width: 768px) {
- .tabs {
-      flex-wrap: wrap;
-      padding-top: 0px;
-    }
-    
-    .tabs li {
-      flex-basis: 100%;
-      margin-bottom: 5px;
-    }
-    
-    .tabs li a {
-      border-radius: 5px;
-    }
-    
-    .mobile-link {
+    #menu {
       display: block;
-      margin-top: 10px;
+    }
+
+    #menu-tabs {
+      display: none;
+    }
+
+    #tabs {
+      display: none;
+    }
+
+    #menu-tabs.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% - 15px);
+    left: 0;
+    width: 100%;
+    background-color: #212529;
+    padding: 10px 0;
+    border-radius: 0 0 5px 5px;
+    }
+
+    #menu-tabs.active li {
+      margin: 0;
       text-align: center;
+    }
+
+    #menu-tabs.active li a {
+      display: block;
+      padding: 10px 15px;
+      color: #bdbdbd;
+      text-decoration: none;
+      border: none;
+    }
+
+    #menu-tabs.active li a.active {
+      background-color: #15191d;
+      color: #fff;
+    }
+
+    .tabs button {
+      margin-bottom: 5px;
+      border-radius: 5px;
     }
   }
   
@@ -126,4 +208,21 @@
       link.classList.add('active');
     }
   });
+
+  function toggle() {
+    const button = document.querySelector('.menu-button');
+    button.classList.toggle('active');
+    const tabs = document.querySelector('#menu-tabs');
+    tabs.classList.toggle('active');
+  }
+  
+  {{!-- window.addEventListener('resize', function() {
+    const tabs = document.querySelector('#menu-tabs');
+  
+    if (window.innerWidth >= 768) {
+      tabs.style.display = 'none';
+    }
+  }); --}}
+
+
 </script>
